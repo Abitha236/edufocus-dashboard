@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduFocus | Virtual Study Room Dashboard</title>
+    <style>
+        /* Professional Dashboard Styling */
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --text-color: #333333;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0 0; font-style: italic; opacity: 0.9; }
+        .student-info { margin-top: 10px; font-size: 14px; color: #93c5fd; }
+
+        nav {
+            background-color: #0f172a;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: #eff6ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-card h3 { margin: 0; font-size: 14px; color: #64748b; }
+        .stat-card p { margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: var(--primary-color); }
+
+        /* Tables & Forms */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th { background-color: #f8fafc; color: var(--primary-color); }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: span 2; }
+        .form-group.radio-group { flex-direction: row; gap: 15px; align-items: center; }
+
+        label { font-weight: 600; margin-bottom: 5px; }
+        input, select, textarea {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn-container { grid-column: span 2; display: flex; gap: 10px; }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button[type="submit"] { background-color: var(--secondary-color); color: white; }
+        button[type="reset"] { background-color: #9ca3af; color: white; }
+
+        marquee {
+            background: #fef08a;
+            padding: 8px;
+            font-weight: bold;
+            color: #854d0e;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #0f172a;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎓 EduFocus</h1>
+        <p>Your Ultimate Virtual Study Room Platform — "Focus Together, Achieve Together"</p>
+        <div class="student-info">
+            <strong>Student Name:</strong> [Your Name Here] | 
+            <strong>Register Number:</strong> [Your Register Number Here]
+        </div>
+    </header>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#services">Services</a>
+        <a href="#reports">Reports</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#logout" onclick="alert('Logging out...')">Logout</a>
+    </nav>
+
+    <div class="container">
+
+        <section id="updates">
+            <marquee behavior="scroll" direction="left">
+                📢 Announcement: Global 24/7 Deep Work Marathon starts this Friday! | 🚀 New Feature: Integrations with Notion and Google Calendar are now live!
+            </marquee>
+        </section>
+
+        <section id="home">
+            <h2>Welcome to EduFocus Dashboard</h2>
+            <p><strong>Project Description:</strong> EduFocus is a next-generation virtual study room platform designed to eliminate student isolation and boost productivity. It enables learners worldwide to join live, moderated focus rooms, track milestones, share resources, and study alongside peers seamlessly.</p>
+            <p><strong>Vision:</strong> To cultivate a global, accessible, and distraction-free digital ecosystem where every student feels motivated to unlock their full academic potential.</p>
+            <p><strong>Mission:</strong> By blending accountability tools, live-streamed peer synergy, and gamified productivity tracking, we strive to transform solo cram sessions into engaging collaborative experiences.</p>
+        </section>
+
+        <section id="dashboard">
+            <h2>Platform Insights & Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <p>12,450</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <p>3,840</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Revenue Generated</h3>
+                    <p>$4,120</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Transactions</h3>
+                    <p>512</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Notifications</h3>
+                    <p>7 New</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Tasks</h3>
+                    <p>3</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>Core Platform Features</h2>
+            <ul>
+                <li><strong>Live Co-Working Rooms:</strong> Join 24/7 video or text-only focus rooms with peers worldwide.</li>
+                <li><strong>Integrated Pomodoro Timers:</strong> Synced customized timers to manage group deep-work intervals.</li>
+                <li><strong>AI Study Assistant:</strong> Real-time summary generation and quick conceptual Q&A bots.</li>
+                <li><strong>Interactive Shared Whiteboards:</strong> Sketch diagrams and map concepts concurrently during group sessions.</li>
+                <li><strong>Distraction Blockers:</strong> Optional browser restrictions to keep you strictly on task.</li>
+            </ul>
+        </section>
+
+        <section id="services">
+            <h2>Our Premium Services</h2>
+            <ol>
+                <li>Private Institutional Study Spaces for High Schools & Universities.</li>
+                <li>One-on-One Verified Expert Academic Tutoring Matchmaking.</li>
+                <li>Premium Analytical Progress Reports and Goal-Tracking Insights.</li>
+                <li>On-Demand Access to an Extensive Peer-Reviewed Shared Resource Library.</li>
+            </ol>
+        </section>
+
+        <section id="reports">
+            <h2>Application Architecture Modules</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module ID</th>
+                        <th>Module Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MOD-001</td>
+                        <td>Authentication & User Management</td>
+                        <td>Handles student registrations, encrypted logins, profile management, and role allocations.</td>
+                    </tr>
+                    <tr>
+                        <td>MOD-002</td>
+                        <td>Live Room Streaming Core</td>
+                        <td>Powers webRTC audio, video, and text communication channels within individual study spaces.</td>
+                    </tr>
+                    <tr>
+                        <td>MOD-003</td>
+                        <td>Analytics & Gamification Tracker</td>
+                        <td>Monitors study hours, processes xp gains, metrics badges, and maps monthly trends.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="register">
+            <h2>New Student & Room Host Registration</h2>
+            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Registration Mock Submitted Successfully!');">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="johndoe@university.edu" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group radio-group">
+                    <label>Gender:</label>
+                    <input type="radio" id="male" name="gender" value="male"> <label style="font-weight: normal;" for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female"> <label style="font-weight: normal;" for="female">Female</label>
+                    <input type="radio" id="other" name="gender" value="other"> <label style="font-weight: normal;" for="other">Other</label>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="address">Mailing Address</label>
+                    <textarea id="address" rows="3" placeholder="Street, City, State, ZIP" required></textarea>
+                </div>
+                <div class="btn-container">
+                    <button type="submit">Submit Registration</button>
+                    <button type="reset">Reset Fields</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Administration</h2>
+            <p><strong>Email:</strong> support@edufocus.com</p>
+            <p><strong>Phone Number:</strong> +1 (800) 555-STUDY</p>
+            <p><strong>Address:</strong> 101 Innovation Way, Tech Campus, Suite 400</p>
+            <p><strong>Social Media Links:</strong> 
+                <a href="https://linkedin.com" target="_blank" style="color: var(--secondary-color); margin-right: 10px;">LinkedIn</a> | 
+                <a href="https://github.com" target="_blank" style="color: var(--secondary-color); margin-left: 10px;">GitHub Workspace</a>
+            </p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 EduFocus. All Rights Reserved. | Designed by [Your Name Here]</p>
+    </footer>
+
+</body>
+</html>
