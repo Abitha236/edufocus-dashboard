@@ -3,335 +3,701 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduFocus | Virtual Study Room Dashboard</title>
+    <title>EduFocus | Premium Virtual Study Room Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* Professional Dashboard Styling */
         :root {
-            --bg-color: #f4f6f9;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-main: #f8fafc;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
             --card-bg: #ffffff;
-            --primary-color: #1e3a8a;
-            --secondary-color: #3b82f6;
-            --text-color: #333333;
-            --border-color: #e5e7eb;
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 5px 0 0 0; font-style: italic; opacity: 0.9; }
-        .student-info { margin-top: 10px; font-size: 14px; color: #93c5fd; }
-
-        nav {
-            background-color: #0f172a;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
             display: flex;
-            justify-content: center;
-            padding: 10px 0;
+            min-height: 100vh;
         }
 
-        nav a {
+        /* --- SIDEBAR NAVIGATION --- */
+        aside {
+            width: 260px;
+            background-color: var(--bg-primary);
             color: white;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+            transition: var(--transition);
+        }
+
+        .sidebar-brand {
+            padding: 24px;
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sidebar-brand i { color: var(--accent-color); }
+
+        .nav-links {
+            list-style: none;
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 100%;
+        }
+
+        .nav-links li {
+            margin-bottom: 0;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8;
             text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 5px;
-            border-radius: 4px;
+            padding: 14px 16px;
+            border-radius: var(--border-radius);
             font-weight: 500;
+            transition: var(--transition);
         }
 
-        nav a:hover {
-            background-color: var(--secondary-color);
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+            background-color: var(--accent-color);
+            transform: translateX(4px);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
+        .nav-links li.logout-item {
+            margin-top: auto;
         }
 
+        .nav-links a.logout-btn {
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .nav-links a.logout-btn:hover {
+            background-color: #ef4444;
+            color: white;
+            transform: none;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main {
+            margin-left: 260px;
+            flex-grow: 1;
+            padding: 40px;
+            max-width: 1400px;
+            transition: var(--transition);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 35px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+        header p { color: #94a3b8; font-size: 15px; margin-bottom: 20px; max-width: 700px; line-height: 1.5; }
+        
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 14px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(4px);
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: fit-content;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .meta-info span { display: flex; align-items: center; gap: 8px; color: #cbd5e1; }
+        .meta-info span strong { color: #fff; background: rgba(59, 130, 246, 0.2); padding: 2px 8px; border-radius: 4px; }
+
+        /* --- MARQUEE --- */
+        .announcement-banner {
+            background: #fef08a;
+            color: #854d0e;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #fef08a;
+        }
+        .announcement-banner marquee { font-weight: 500; }
+
+        /* --- SECTIONS & CARDS --- */
         section {
             background: var(--card-bg);
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
         }
 
         h2 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-top: 0;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
         }
+        h2 i { color: var(--accent-color); }
 
-        /* Stats Grid */
+        /* Welcome Section */
+        .welcome-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+        }
+        .vision-mission {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .vision-mission p { font-size: 14px; line-height: 1.6; color: #475569; }
+
+        /* --- STATS GRID --- */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+            gap: 20px;
         }
 
         .stat-card {
-            background: #eff6ff;
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px;
-            border-radius: 6px;
+            background: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            padding: 24px 20px;
+            border-radius: var(--border-radius);
             text-align: center;
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-color);
+        }
+        .stat-card .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: #eff6ff;
+            color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        .stat-card:hover .icon-wrapper {
+            background: var(--accent-color);
+            color: white;
+        }
+        .stat-card h3 { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+        .stat-card p { font-size: 28px; font-weight: 700; color: var(--text-dark); margin-top: 6px; letter-spacing: -0.5px; }
+
+        /* --- LISTS (FEATURES & SERVICES) --- */
+        .list-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 14px;
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.5;
         }
 
-        .stat-card h3 { margin: 0; font-size: 14px; color: #64748b; }
-        .stat-card p { margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: var(--primary-color); }
-
-        /* Tables & Forms */
+        /* --- TABLES --- */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        table, th, td {
-            border: 1px solid var(--border-color);
-        }
-
-        th, td {
-            padding: 12px;
             text-align: left;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #f8fafc; }
+        .badge {
+            background: #dbeafe;
+            color: var(--accent-color);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
         }
 
-        th { background-color: #f8fafc; color: var(--primary-color); }
-
+        /* --- FORMS --- */
         form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 24px;
         }
-
-        .form-group { display: flex; flex-direction: column; }
-        .form-group.full-width { grid-column: span 2; }
-        .form-group.radio-group { flex-direction: row; gap: 15px; align-items: center; }
-
-        label { font-weight: 600; margin-bottom: 5px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .full-width { grid-column: span 2; }
+        
+        label { font-size: 14px; font-weight: 600; color: #334155; }
         input, select, textarea {
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
             font-size: 14px;
+            color: var(--text-dark);
+            background-color: #fff;
+            transition: var(--transition);
         }
-
-        .btn-container { grid-column: span 2; display: flex; gap: 10px; }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+        }
+        
+        .radio-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            height: 100%;
+            padding: 10px 0;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 500;
+            color: #475569;
         }
-        button[type="submit"] { background-color: var(--secondary-color); color: white; }
-        button[type="reset"] { background-color: #9ca3af; color: white; }
+        .radio-option input { cursor: pointer; width: 16px; height: 16px; accent-color: var(--accent-color); }
 
-        marquee {
-            background: #fef08a;
-            padding: 8px;
-            font-weight: bold;
-            color: #854d0e;
-            border-radius: 4px;
+        .btn-container { display: flex; gap: 14px; margin-top: 10px; }
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
         }
+        button[type="submit"] { background: var(--accent-color); color: white; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3); }
+        button[type="submit"]:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        button[type="reset"] { background: #e2e8f0; color: #475569; }
+        button[type="reset"]:hover { background: #cbd5e1; }
+
+        /* --- CONTACT & FOOTER --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .contact-info p { margin-bottom: 16px; font-size: 15px; display: flex; align-items: center; gap: 12px; color: #475569; }
+        .contact-info p i { color: var(--accent-color); width: 20px; }
+        
+        .social-links { margin-top: 5px; }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: #f1f5f9;
+            color: var(--text-dark);
+            border-radius: 50%;
+            margin-right: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .social-links a:hover { background: var(--accent-color); color: white; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25); }
 
         footer {
             text-align: center;
-            padding: 20px;
-            background: #0f172a;
-            color: white;
+            padding: 30px 24px;
+            border-top: 1px solid #e2e8f0;
             margin-top: 40px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media(max-width: 992px) {
+            aside { width: 70px; }
+            aside .sidebar-brand span, aside .nav-links span { display: none; }
+            aside .sidebar-brand { justify-content: center; padding: 24px 0; }
+            aside .nav-links a { justify-content: center; padding: 14px 0; }
+            aside .nav-links a:hover { transform: none; }
+            main { margin-left: 70px; padding: 24px; }
+            .welcome-grid, .list-grid, .contact-grid, form { grid-template-columns: 1fr; }
+            .full-width, .btn-container { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🎓 EduFocus</h1>
-        <p>Your Ultimate Virtual Study Room Platform — "Focus Together, Achieve Together"</p>
-        <div class="student-info">
-            <strong>Student Name:</strong> [Your Name Here] | 
-            <strong>Register Number:</strong> [Your Register Number Here]
+    <aside>
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>EduFocus</span>
         </div>
-    </header>
+        <ul class="nav-links">
+            <li><a href="#home" class="active"><i class="fa-solid fa-house"></i> <span>Home</span></a></li>
+            <li><a href="#dashboard"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span></a></li>
+            <li><a href="#features-services"><i class="fa-solid fa-cubes"></i> <span>Features</span></a></li>
+            <li><a href="#reports"><i class="fa-solid fa-file-invoice"></i> <span>Reports</span></a></li>
+            <li><a href="#register"><i class="fa-solid fa-user-plus"></i> <span>Register</span></a></li>
+            <li><a href="#contact"><i class="fa-solid fa-address-book"></i> <span>Contact</span></a></li>
+            <li class="logout-item"><a href="#logout" class="logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a></li>
+        </ul>
+    </aside>
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#dashboard">Dashboard</a>
-        <a href="#services">Services</a>
-        <a href="#reports">Reports</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="#logout" onclick="alert('Logging out...')">Logout</a>
-    </nav>
+    <main>
+        
+        <header>
+            <h1>EduFocus Virtual Platform</h1>
+            <p>"Focus Together, Achieve Together" — Seamless workspace environments customized for optimized virtual productivity.</p>
+            <div class="meta-info">
+                <span><i class="fa-solid fa-user"></i> Student: <strong id="headerName">[Your Name Here]</strong></span>
+                <span><i class="fa-solid fa-id-card"></i> Phone / ID: <strong id="headerId">[Your Register Number Here]</strong></span>
+            </div>
+        </header>
 
-    <div class="container">
-
-        <section id="updates">
-            <marquee behavior="scroll" direction="left">
-                📢 Announcement: Global 24/7 Deep Work Marathon starts this Friday! | 🚀 New Feature: Integrations with Notion and Google Calendar are now live!
+        <div class="announcement-banner">
+            <i class="fa-solid fa-bullhorn"></i>
+            <marquee behavior="scroll" direction="left" scrollamount="6">
+                🚀 Update v2.4 Live: Integrated Global Pomodoro Sessions and Shared Interactive Miro Whiteboards! ⚡ Mega Focus Event scheduled for this coming Friday.
             </marquee>
-        </section>
+        </div>
 
         <section id="home">
-            <h2>Welcome to EduFocus Dashboard</h2>
-            <p><strong>Project Description:</strong> EduFocus is a next-generation virtual study room platform designed to eliminate student isolation and boost productivity. It enables learners worldwide to join live, moderated focus rooms, track milestones, share resources, and study alongside peers seamlessly.</p>
-            <p><strong>Vision:</strong> To cultivate a global, accessible, and distraction-free digital ecosystem where every student feels motivated to unlock their full academic potential.</p>
-            <p><strong>Mission:</strong> By blending accountability tools, live-streamed peer synergy, and gamified productivity tracking, we strive to transform solo cram sessions into engaging collaborative experiences.</p>
+            <h2><i class="fa-solid fa-door-open"></i> Welcome to Your Command Center</h2>
+            <div class="welcome-grid">
+                <div>
+                    <p style="margin-bottom: 15px; color: #475569; line-height: 1.6;">
+                        <strong>Project Description:</strong> EduFocus breaks down remote isolation structures. We supply modern, persistent virtual workspaces where digital cohorts work asynchronously or concurrently via integrated text/video dynamic channels, tracking milestones fluidly side-by-side.
+                    </p>
+                </div>
+                <div class="vision-mission">
+                    <p><strong><i class="fa-solid fa-eye" style="color:var(--accent-color)"></i> Vision:</strong> To cultivate a global distraction-free digital ecosystem boosting shared human performance.</p>
+                    <p style="margin: 0;"><strong><i class="fa-solid fa-bullseye" style="color:var(--accent-color)"></i> Mission:</strong> Fusing micro-gamification trackers and deep-focus toolsets to convert boring cram sessions into collaborative runs.</p>
+                </div>
+            </div>
         </section>
 
         <section id="dashboard">
-            <h2>Platform Insights & Statistics</h2>
+            <h2><i class="fa-solid fa-chart-line"></i> Live Platform Insights</h2>
             <div class="stats-grid">
                 <div class="stat-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-users"></i></div>
                     <h3>Total Users</h3>
-                    <p>12,450</p>
+                    <p id="totalUsers">12,450</p>
                 </div>
                 <div class="stat-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-circle-dot" style="color: #22c55e;"></i></div>
                     <h3>Active Users</h3>
-                    <p>3,840</p>
+                    <p id="activeUsers">3,842</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Revenue Generated</h3>
+                    <div class="icon-wrapper"><i class="fa-solid fa-wallet"></i></div>
+                    <h3>Revenue</h3>
                     <p>$4,120</p>
                 </div>
                 <div class="stat-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-credit-card"></i></div>
                     <h3>Transactions</h3>
                     <p>512</p>
                 </div>
                 <div class="stat-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-bell"></i></div>
                     <h3>Notifications</h3>
-                    <p>7 New</p>
+                    <p style="color: #f59e0b;">7 New</p>
                 </div>
                 <div class="stat-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-list-check"></i></div>
                     <h3>Pending Tasks</h3>
                     <p>3</p>
                 </div>
             </div>
         </section>
 
-        <section id="features">
-            <h2>Core Platform Features</h2>
-            <ul>
-                <li><strong>Live Co-Working Rooms:</strong> Join 24/7 video or text-only focus rooms with peers worldwide.</li>
-                <li><strong>Integrated Pomodoro Timers:</strong> Synced customized timers to manage group deep-work intervals.</li>
-                <li><strong>AI Study Assistant:</strong> Real-time summary generation and quick conceptual Q&A bots.</li>
-                <li><strong>Interactive Shared Whiteboards:</strong> Sketch diagrams and map concepts concurrently during group sessions.</li>
-                <li><strong>Distraction Blockers:</strong> Optional browser restrictions to keep you strictly on task.</li>
-            </ul>
-        </section>
-
-        <section id="services">
-            <h2>Our Premium Services</h2>
-            <ol>
-                <li>Private Institutional Study Spaces for High Schools & Universities.</li>
-                <li>One-on-One Verified Expert Academic Tutoring Matchmaking.</li>
-                <li>Premium Analytical Progress Reports and Goal-Tracking Insights.</li>
-                <li>On-Demand Access to an Extensive Peer-Reviewed Shared Resource Library.</li>
-            </ol>
+        <section id="features-services">
+            <div class="list-grid">
+                <div>
+                    <h2><i class="fa-solid fa-star"></i> Core Platform Features</h2>
+                    <ul>
+                        <li><strong>Persistent Co-Working Rooms:</strong> Dynamic 24/7 video and clean distraction-free chat hubs.</li>
+                        <li><strong>Synced Pomodoro Hubs:</strong> Centralized team timers configured to keep team intervals uniform.</li>
+                        <li><strong>AI Knowledge Assistant:</strong> Automated prompt synthesis engines generating summary workflows instantly.</li>
+                        <li><strong>Integrated Screen Sharing:</strong> Zero-latency collaborative presentations within private study groups.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2><i class="fa-solid fa-handshake"></i> Premium Services Offered</h2>
+                    <ol>
+                        <li>White-labeled Institution Hub Environments optimized for academic campuses.</li>
+                        <li>On-demand scheduling matrix matching users directly to verified peer subject tutors.</li>
+                        <li>Analytical micro-metrics monitoring behavior indexes monthly.</li>
+                        <li>Secure decentralized file cabinets cataloging structural revision data.</li>
+                    </ol>
+                </div>
+            </div>
         </section>
 
         <section id="reports">
-            <h2>Application Architecture Modules</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Module ID</th>
-                        <th>Module Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>MOD-001</td>
-                        <td>Authentication & User Management</td>
-                        <td>Handles student registrations, encrypted logins, profile management, and role allocations.</td>
-                    </tr>
-                    <tr>
-                        <td>MOD-002</td>
-                        <td>Live Room Streaming Core</td>
-                        <td>Powers webRTC audio, video, and text communication channels within individual study spaces.</td>
-                    </tr>
-                    <tr>
-                        <td>MOD-003</td>
-                        <td>Analytics & Gamification Tracker</td>
-                        <td>Monitors study hours, processes xp gains, metrics badges, and maps monthly trends.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2><i class="fa-solid fa-layer-group"></i> Architecture Modules</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module ID</th>
+                            <th>Module Name</th>
+                            <th>System Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge">MOD-001</span></td>
+                            <td><strong>Identity Access Layer</strong></td>
+                            <td>Manages JWT structural tokens, secure multi-factor authentication, and user access records.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge">MOD-002</span></td>
+                            <td><strong>WebRTC Real-time Engine</strong></td>
+                            <td>Architects cross-browser audio and video streaming pipelines inside live active workspaces.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge">MOD-003</span></td>
+                            <td><strong>Gamification Analytics</strong></td>
+                            <td>Compiles study data metrics to distribute experience points and achievement badges dynamically.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="register">
-            <h2>New Student & Room Host Registration</h2>
-            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Registration Mock Submitted Successfully!');">
+            <h2><i class="fa-solid fa-clipboard-list"></i> Workspace Registration Form</h2>
+            <form id="registrationForm">
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" placeholder="John Doe" required>
+                    <input type="text" id="name" placeholder="Alex Mercer" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="johndoe@university.edu" required>
+                    <label for="email">Academic Email</label>
+                    <input type="email" id="email" placeholder="alex@university.edu" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                    <label for="phone">Phone Number / Reg No</label>
+                    <input type="text" id="phone" placeholder="+1 (555) 019-2834" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
+                    <label for="password">Security Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
                 </div>
-                <div class="form-group radio-group">
-                    <label>Gender:</label>
-                    <input type="radio" id="male" name="gender" value="male"> <label style="font-weight: normal;" for="male">Male</label>
-                    <input type="radio" id="female" name="gender" value="female"> <label style="font-weight: normal;" for="female">Female</label>
-                    <input type="radio" id="other" name="gender" value="other"> <label style="font-weight: normal;" for="other">Other</label>
+                <div class="form-group">
+                    <label>Gender Allocation</label>
+                    <div class="radio-container">
+                        <label class="radio-option"><input type="radio" name="gender" value="male" checked> Male</label>
+                        <label class="radio-option"><input type="radio" name="gender" value="female"> Female</label>
+                        <label class="radio-option"><input type="radio" name="gender" value="other"> Other</label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="dob">Date of Birth</label>
                     <input type="date" id="dob" required>
                 </div>
                 <div class="form-group full-width">
-                    <label for="address">Mailing Address</label>
-                    <textarea id="address" rows="3" placeholder="Street, City, State, ZIP" required></textarea>
+                    <label for="address">Primary Postal Address</label>
+                    <textarea id="address" rows="3" placeholder="742 Evergreen Terrace, Springfield" required></textarea>
                 </div>
-                <div class="btn-container">
-                    <button type="submit">Submit Registration</button>
-                    <button type="reset">Reset Fields</button>
+                <div class="btn-container full-width">
+                    <button type="submit">Complete Setup</button>
+                    <button type="reset" id="resetBtn">Clear Form</button>
                 </div>
             </form>
         </section>
 
         <section id="contact">
-            <h2>Contact Administration</h2>
-            <p><strong>Email:</strong> support@edufocus.com</p>
-            <p><strong>Phone Number:</strong> +1 (800) 555-STUDY</p>
-            <p><strong>Address:</strong> 101 Innovation Way, Tech Campus, Suite 400</p>
-            <p><strong>Social Media Links:</strong> 
-                <a href="https://linkedin.com" target="_blank" style="color: var(--secondary-color); margin-right: 10px;">LinkedIn</a> | 
-                <a href="https://github.com" target="_blank" style="color: var(--secondary-color); margin-left: 10px;">GitHub Workspace</a>
-            </p>
+            <h2><i class="fa-solid fa-paper-plane"></i> Contact Control Administration</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p><i class="fa-solid fa-envelope"></i> admin@edufocus.com</p>
+                    <p><i class="fa-solid fa-phone"></i> +1 (800) 555-JOIN</p>
+                    <p><i class="fa-solid fa-location-dot"></i> Quantum Campus, Level 4 Innovation Tower</p>
+                </div>
+                <div>
+                    <p style="font-weight: 600; margin-bottom: 12px;">Corporate & Code Vectors</p>
+                    <div class="social-links">
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn Profile"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://github.com" target="_blank" title="Repository Base Workspace"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
         </section>
 
-    </div>
+        <footer>
+            <p>&copy; 2026 EduFocus Space Platform. Crafted and Deployed by <strong id="footerName">[Your Name Here]</strong> for Placement Evaluation.</p>
+        </footer>
+    </main>
 
-    <footer>
-        <p>&copy; 2026 EduFocus. All Rights Reserved. | Designed by [Your Name Here]</p>
-    </footer>
+    <script>
+        // DOM Elements for dynamic update
+        const headerName = document.getElementById('headerName');
+        const headerId = document.getElementById('headerId');
+        const footerName = document.getElementById('footerName');
 
+        // Check if data exists in localStorage on initial boot load
+        function loadSavedUserData() {
+            const savedName = localStorage.getItem('eduUser_name');
+            const savedId = localStorage.getItem('eduUser_id');
+            if (savedName && savedId) {
+                headerName.innerText = savedName;
+                footerName.innerText = savedName;
+                headerId.innerText = savedId;
+            }
+        }
+        loadSavedUserData();
+
+        // Smooth Active Sidebar Link Swapping and Scrolling
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if(this.id === 'logoutBtn') return;
+                links.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Form Processing logic with state change update
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const studentName = document.getElementById('name').value;
+            const studentPhone = document.getElementById('phone').value;
+
+            // Instantly map variables to DOM interface fields
+            headerName.innerText = studentName;
+            footerName.innerText = studentName;
+            headerId.innerText = studentPhone;
+
+            // Cache data structure inside local storage session profiles
+            localStorage.setItem('eduUser_name', studentName);
+            localStorage.setItem('eduUser_id', studentPhone);
+
+            alert(`🎉 Success! Registration profile built for ${studentName}. Welcome to the virtual study rooms!`);
+            this.reset();
+        });
+
+        // Interactive Reset UX confirmation
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            console.log("Form tracking buffer cleared safely.");
+        });
+
+        // Complete Logout Architecture with data purging and full environment clean refreshes
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const confirms = confirm("Are you sure you want to exit the dashboard environment?");
+            if(confirms) {
+                // Clear active user session details tracking fields
+                localStorage.removeItem('eduUser_name');
+                localStorage.removeItem('eduUser_id');
+                
+                alert("Successfully cleared authentication sessions! Redirecting...");
+                // Reload browser back to pristine state values cleanly
+                window.location.reload();
+            }
+        });
+
+        // Live Mock Metric Fluid Shifts
+        setInterval(() => {
+            const activeCount = document.getElementById('activeUsers');
+            if (activeCount) {
+                const randomVariance = Math.floor(Math.random() * 11) - 5; 
+                let currentVal = parseInt(activeCount.innerText.replace(/,/g, ''));
+                activeCount.innerText = (currentVal + randomVariance).toLocaleString();
+            }
+        }, 4000);
+    </script>
 </body>
 </html>
