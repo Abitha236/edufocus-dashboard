@@ -3,87 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduFocus Pro | Ultimate Virtual Study Room Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>EduFocus Premium | Ultimate Strategic Study Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- CONFIGURATION & DESIGN SYSTEM (REQT 1) --- */
+        /* --- DESIGN SYSTEM CONFIGURATION --- */
         :root {
-            /* Dark Theme Base (Default) */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-main: #0b0f19;
-            --card-bg: #1e293b;
-            --text-dark: #f8fafc;
-            --text-light: #94a3b8;
-            --border-color: #334155;
-            --input-bg: #0f172a;
+            --bg-primary: #0b0f19;
+            --bg-sidebar: #111827;
+            --bg-card: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-ui: #374151;
+            --bg-input: #111827;
             
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
-            --border-radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
+            --brand-accent: #3b82f6;
+            --brand-hover: #1d4ed8;
+            --radius-main: 16px;
+            --radius-smooth: 12px;
+            --motion-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --shadow-premium: 0 10px 30px -10px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.25);
         }
 
         [data-theme="light"] {
-            /* Light Theme Overrides (REQT 10) */
-            --bg-primary: #0f172a; /* Keep sidebar distinct */
-            --bg-secondary: #e2e8f0;
-            --bg-main: #f8fafc;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-light: #64748b;
-            --border-color: #cbd5e1;
-            --input-bg: #ffffff;
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --bg-primary: #f8fafc;
+            --bg-sidebar: #0f172a; /* Kept dark for stark, beautiful brand hierarchy */
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-ui: #e2e8f0;
+            --bg-input: #f1f5f9;
+            --shadow-premium: 0 10px 30px -15px rgba(15, 23, 42, 0.08);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.15);
         }
 
-        /* --- CORE STYLING & ANIMATIONS (REQT 14) --- */
+        /* --- GLOBAL BASICS & ANIMATION DEFS --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             scroll-behavior: smooth;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+        @keyframes premiumFadeUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
+        @keyframes premiumSlideRight {
+            from { opacity: 0; transform: translateX(-40px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
-        @keyframes pulseIndicator {
-            0% { transform: scale(0.9); opacity: 0.6; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.6; }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 1; box-shadow: var(--shadow-glow); }
+            100% { transform: scale(0.95); opacity: 0.5; }
         }
 
-        @keyframes typing {
+        @keyframes continuousTextTyping {
             from { width: 0; }
             to { width: 100%; }
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-dark);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
             display: flex;
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
         }
 
-        /* --- NAVIGATION SIDEBAR (REQT 2) --- */
+        /* --- NAVIGATION SIDEBAR ASSEMBLY --- */
         aside {
-            width: 260px;
-            background-color: #0f172a;
+            width: 280px;
+            background-color: var(--bg-sidebar);
             color: white;
             position: fixed;
             top: 0;
@@ -92,167 +90,181 @@
             display: flex;
             flex-direction: column;
             z-index: 100;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+            box-shadow: 5px 0 30px rgba(0,0,0,0.25);
+            padding: 10px;
         }
 
         .sidebar-brand {
-            padding: 24px;
-            font-size: 22px;
-            font-weight: 700;
+            padding: 30px 20px;
+            font-size: 24px;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: #1e293b;
+            gap: 14px;
+            letter-spacing: -0.5px;
         }
-        .sidebar-brand i { color: var(--accent-color); animation: pulseIndicator 2s infinite ease-in-out; }
+        .sidebar-brand i { 
+            color: var(--brand-accent); 
+            animation: pulseGlow 2.5s infinite ease-in-out; 
+            background: rgba(59, 130, 246, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
 
         .nav-links {
             list-style: none;
-            padding: 20px 12px;
+            padding: 10px 8px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             height: 100%;
         }
 
         .nav-links a {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             color: #94a3b8;
             text-decoration: none;
-            padding: 14px 16px;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            transition: var(--transition); /* REQT 15 */
+            padding: 14px 18px;
+            border-radius: var(--radius-smooth);
+            font-weight: 600;
+            font-size: 15px;
+            transition: var(--motion-smooth);
         }
 
         .nav-links a:hover, .nav-links a.active {
             color: white;
-            background-color: var(--accent-color);
-            transform: translateX(5px);
+            background-color: var(--brand-accent);
+            transform: translateX(6px);
+            box-shadow: var(--shadow-glow);
         }
 
-        .logout-item { margin-top: auto; }
-        .logout-btn { color: #f87171 !important; border: 1px solid rgba(239, 68, 68, 0.2); }
-        .logout-btn:hover { background-color: #ef4444 !important; color: white !important; transform: none !important; }
+        .logout-item { margin-top: auto; padding-bottom: 15px; }
+        .logout-btn { color: #f87171 !important; border: 1px solid rgba(239, 68, 68, 0.15); }
+        .logout-btn:hover { background-color: #ef4444 !important; color: white !important; transform: none !important; box-shadow: none !important; }
 
-        /* --- MAIN DASHBOARD WINDOW --- */
+        /* --- DASHBOARD WINDOW SCENERY --- */
         main {
-            margin-left: 260px;
+            margin-left: 280px;
             flex-grow: 1;
-            padding: 40px;
-            max-width: 1400px;
-            transition: var(--transition);
+            padding: 40px 60px;
+            max-width: 1500px;
+            width: calc(100% - 280px);
         }
 
-        /* Utility Controls (Theme & Notification Hub) */
         .utility-row {
             display: flex;
             justify-content: flex-end;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 16px;
+            margin-bottom: 30px;
         }
 
         .circle-control-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-dark);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-ui);
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             position: relative;
-            transition: var(--transition); /* REQT 15 */
+            font-size: 16px;
+            transition: var(--motion-smooth);
+            box-shadow: var(--shadow-premium);
         }
         .circle-control-btn:hover {
-            transform: scale(1.1);
-            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            border-color: var(--brand-accent);
+            color: var(--brand-accent);
         }
         .notification-badge {
             position: absolute;
-            top: 2px;
-            right: 2px;
+            top: -4px;
+            right: -4px;
             background: #ef4444;
             color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 8px;
+            border: 2px solid var(--bg-primary);
         }
 
-        /* --- NOTIFICATION PANEL (REQT 11) --- */
+        /* --- NOTIFICATION DROPDOWN FRAME --- */
         .notification-panel {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-lg);
-            display: none; /* Controlled via JS */
-            animation: fadeIn 0.4s ease;
-        }
-        .notification-panel h4 { margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .notification-list { list-style: none; padding: 0; }
-        .notification-list li { padding: 10px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; color: var(--text-dark); }
-        .notification-list li:last-child { border-bottom: none; }
-
-        /* --- WELCOME BANNER (REQT 3) --- */
-        header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            padding: 35px;
-            border-radius: var(--border-radius);
+            background: var(--bg-card);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-main);
+            padding: 24px;
             margin-bottom: 30px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-premium);
+            display: none;
+            animation: premiumFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .notification-panel h4 { margin-bottom: 16px; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+        .notification-list { list-style: none; }
+        .notification-list li { padding: 14px 0; border-bottom: 1px solid var(--border-ui); font-size: 14px; color: var(--text-main); line-height: 1.5; }
+        .notification-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+        /* --- HERO HEADER BANNER --- */
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 50px;
+            border-radius: var(--radius-main);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-premium);
             position: relative;
             overflow: hidden;
-            animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: premiumSlideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .typing-container {
             overflow: hidden;
             white-space: nowrap;
-            border-right: 3px solid var(--accent-color);
-            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+            border-right: 3px solid var(--brand-accent);
+            animation: continuousTextTyping 2.5s steps(35, end), blink-caret 0.75s step-end infinite;
             max-width: fit-content;
         }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-color); } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--brand-accent); } }
 
-        header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-        header p { color: #94a3b8; font-size: 15px; margin-bottom: 20px; line-height: 1.5; }
+        header h1 { font-size: 38px; font-weight: 800; margin-bottom: 12px; letter-spacing: -1px; }
+        header p { color: #94a3b8; font-size: 16px; margin-bottom: 28px; max-width: 700px; line-height: 1.6; }
         
         .meta-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
             font-size: 14px;
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(4px);
-            padding: 12px 20px;
-            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(8px);
+            padding: 14px 24px;
+            border-radius: var(--radius-smooth);
             width: fit-content;
             border: 1px solid rgba(255,255,255,0.05);
         }
-        /* Dynamic Date/Time Widget (REQT 9) */
         .live-clock-widget {
             background: rgba(59, 130, 246, 0.2);
-            padding: 2px 10px;
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 6px;
+            color: #60a5fa;
+            font-weight: 700;
         }
 
-        /* --- CAROUSEL SLIDER (REQT 8) --- */
+        /* --- CAROUSEL COMPONENT --- */
         .slider-container {
             position: relative;
-            height: 220px;
-            border-radius: var(--border-radius);
+            height: 260px;
+            border-radius: var(--radius-main);
             overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--border-ui);
         }
         .slide {
             position: absolute;
@@ -265,171 +277,334 @@
             flex-direction: column;
             color: white;
             text-align: center;
-            padding: 30px;
-            transition: opacity 1s ease-in-out;
+            padding: 40px;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .slide:nth-child(1) { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80') center/cover; opacity: 1; }
-        .slide:nth-child(2) { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80') center/cover; }
-        .slide:nth-child(3) { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80') center/cover; }
+        .slide:nth-child(1) { background: linear-gradient(rgba(11, 15, 25, 0.65), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80') center/cover; opacity: 1; }
+        .slide:nth-child(2) { background: linear-gradient(rgba(11, 15, 25, 0.65), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80') center/cover; }
+        .slide:nth-child(3) { background: linear-gradient(rgba(11, 15, 25, 0.65), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80') center/cover; }
         
-        .slide h2 { color: white; font-size: 26px; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
-        .slide p { font-size: 16px; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+        .slide h2 { color: white; font-size: 30px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .slide p { font-size: 16px; color: #cbd5e1; max-width: 600px; line-height: 1.5; }
         
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
             color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             cursor: pointer;
             z-index: 10;
-            transition: var(--transition);
+            transition: var(--motion-smooth);
         }
-        .slider-arrow:hover { background: var(--accent-color); }
-        .arrow-left { left: 15px; }
-        .arrow-right { right: 15px; }
+        .slider-arrow:hover { background: var(--brand-accent); border-color: transparent; color: white; transform: translateY(-50%) scale(1.1); }
+        .arrow-left { left: 20px; }
+        .arrow-right { right: 20px; }
 
-        /* --- DASHBOARD STATS CARDS (REQT 4 & 5) --- */
+        /* --- SECTION BASE RULES --- */
+        section {
+            background: var(--bg-card);
+            border-radius: var(--radius-main);
+            padding: 40px;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--border-ui);
+            margin-bottom: 40px;
+            animation: premiumFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        section h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        /* --- STATISTICS GRID --- */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
         }
 
         .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 24px 20px;
-            border-radius: var(--border-radius);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-ui);
+            padding: 30px 24px;
+            border-radius: var(--radius-smooth);
             text-align: center;
-            transition: var(--transition); /* REQT 15 */
+            transition: var(--motion-smooth);
         }
         .stat-card:hover {
-            transform: translateY(-8px) scale(1.02); /* Zoom Hover Animation */
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent-color);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-premium);
+            border-color: var(--brand-accent);
         }
         .stat-card .icon-wrapper {
-            width: 50px;
-            height: 50px;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-color);
-            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            background: rgba(59, 130, 246, 0.08);
+            color: var(--brand-accent);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px auto;
-            font-size: 20px;
+            margin: 0 auto 20px auto;
+            font-size: 22px;
+            transition: var(--motion-smooth);
         }
+        .stat-card:hover .icon-wrapper {
+            background: var(--brand-accent);
+            color: white;
+            transform: rotate(360deg);
+        }
+        .stat-card h3 { font-size: 14px; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
+        .stat-card .counter-ticker, .stat-card p { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
 
-        /* --- FEATURES & SERVICES WITH TRANSITIONS (REQT 6 & 7) --- */
+        /* --- DUAL GRID (FEATURES & SERVICES) --- */
         .list-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            margin-bottom: 30px;
         }
-        section {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
+        .panel-container { display: flex; flex-direction: column; gap: 14px; }
         
         .interactive-panel-item {
-            padding: 15px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 12px;
-            transition: var(--transition);
+            padding: 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-smooth);
+            transition: var(--motion-smooth);
+            line-height: 1.5;
         }
         .interactive-panel-item:hover {
-            border-color: var(--accent-color);
-            transform: translateX(6px);
-            background: rgba(59, 130, 246, 0.05);
+            border-color: var(--brand-accent);
+            transform: translateX(8px);
+            background: rgba(59, 130, 246, 0.03);
         }
 
-        /* --- TABLES --- */
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 30px;
+        /* --- LIVE CHAT & WORK MANAGER SYSTEM --- */
+        .workspace-productivity-hubs {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+            margin-bottom: 40px;
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
-        th, td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); color: var(--text-dark); }
-        th { background-color: var(--bg-secondary); font-weight: 600; }
-        tr:hover { background-color: rgba(59, 130, 246, 0.03); }
-
-        /* --- VALIDATED REGISTRATION FORM (REQT 12 & 13) --- */
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; gap: 6px; position: relative; }
-        .full-width { grid-column: span 2; }
-        label { font-size: 14px; font-weight: 600; color: var(--text-dark); }
-        
-        input, select, textarea {
+        .chat-module-box {
+            display: flex;
+            flex-direction: column;
+            height: 380px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-smooth);
+            overflow: hidden;
+        }
+        .chat-header-bar {
+            padding: 14px 20px;
+            background: var(--bg-input);
+            border-bottom: 1px solid var(--border-ui);
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .chat-pulse-node {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+        }
+        .chat-scroller-area {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-bubble-row {
+            max-width: 80%;
             padding: 12px 16px;
-            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .chat-bubble-row.peer {
+            background: var(--bg-card);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-ui);
+        }
+        .chat-bubble-row.operator {
+            background: var(--brand-accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-input-row {
+            display: flex;
+            border-top: 1px solid var(--border-ui);
+            background: var(--bg-input);
+        }
+        .chat-input-row input {
+            border: none;
+            background: transparent;
+            padding: 16px;
+            flex-grow: 1;
+            border-radius: 0;
+        }
+        .chat-input-row button {
+            border-radius: 0;
+            padding: 0 24px;
+            background: var(--brand-accent);
+            color: white;
+        }
+
+        /* Kanban Board Component Styles */
+        .kanban-tasks-panel {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-smooth);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 380px;
+        }
+        .task-list-scroller {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .task-item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-ui);
+            padding: 12px 16px;
             border-radius: 8px;
             font-size: 14px;
-            color: var(--text-dark);
-            background-color: var(--input-bg);
-            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--motion-smooth);
+        }
+        .task-item-card:hover { border-color: var(--brand-accent); }
+        .task-trash-btn {
+            background: transparent;
+            color: #f87171;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* --- RESPONSE DATA MATRIX TABLE WITH FILTERS --- */
+        .table-filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .filter-chip {
+            padding: 8px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-ui);
+            color: var(--text-muted);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--motion-smooth);
+        }
+        .filter-chip.active, .filter-chip:hover {
+            background: var(--brand-accent);
+            color: white;
+            border-color: transparent;
+        }
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: var(--radius-smooth);
+            border: 1px solid var(--border-ui);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 15px; }
+        th, td { padding: 18px 24px; border-bottom: 1px solid var(--border-ui); color: var(--text-main); }
+        th { background-color: var(--bg-input); font-weight: 700; color: var(--text-muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: rgba(59, 130, 246, 0.02); }
+        .badge { background: rgba(59, 130, 246, 0.1); color: var(--brand-accent); padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+
+        /* --- PREMIUM FORM INPUTS SYSTEM --- */
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; position: relative; }
+        .full-width { grid-column: span 2; }
+        label { font-size: 14px; font-weight: 700; color: var(--text-main); }
+        
+        input, select, textarea {
+            padding: 14px 18px;
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-smooth);
+            font-size: 15px;
+            color: var(--text-main);
+            background-color: var(--bg-input);
+            transition: var(--motion-smooth);
+            width: 100%;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: var(--brand-accent);
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
         }
         
-        /* Error Validation States */
+        /* Interactive Input Fail States */
         .error-message {
             color: #ef4444;
-            font-size: 11px;
+            font-size: 12px;
             margin-top: 4px;
             display: none;
+            font-weight: 500;
         }
         .invalid-input {
             border-color: #ef4444 !important;
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12) !important;
         }
 
-        .radio-container { display: flex; gap: 20px; padding: 10px 0; }
-        .radio-option { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
-        .radio-option input { width: 16px; height: 16px; accent-color: var(--accent-color); }
+        .radio-container { display: flex; gap: 24px; padding: 12px 0; }
+        .radio-option { display: flex; align-items: center; gap: 10px; font-size: 15px; cursor: pointer; font-weight: 500; }
+        .radio-option input { width: 18px; height: 18px; accent-color: var(--brand-accent); }
 
-        .btn-container { display: flex; gap: 14px; }
+        .btn-container { display: flex; gap: 16px; margin-top: 10px; }
         button {
-            padding: 14px 28px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
+            border-radius: var(--radius-smooth);
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            transition: var(--transition); /* REQT 15 */
+            transition: var(--motion-smooth);
         }
-        button[type="submit"] { background: var(--accent-color); color: white; }
-        button[type="submit"]:hover { background: var(--accent-hover); transform: translateY(-2px); }
-        button[type="reset"] { background: var(--bg-secondary); color: var(--text-dark); }
-        button[type="reset"]:hover { background: var(--border-color); }
+        button[type="submit"] { background: var(--brand-accent); color: white; box-shadow: var(--shadow-glow); }
+        button[type="submit"]:hover { background: var(--brand-hover); transform: translateY(-2px); }
+        button[type="reset"] { background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-ui); }
+        button[type="reset"]:hover { background: var(--border-ui); }
 
-        /* --- SCROLL TO TOP BUTTON (REQT 16) --- */
+        /* --- ENGINE SYSTEM SCROLL INTERCEPTOR --- */
         #scrollToTopBtn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--accent-color);
+            bottom: 40px;
+            right: 40px;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: var(--brand-accent);
             color: white;
             border: none;
             display: none;
@@ -437,52 +612,78 @@
             justify-content: center;
             font-size: 18px;
             cursor: pointer;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-glow);
             z-index: 1000;
-            transition: var(--transition);
+            transition: var(--motion-smooth);
         }
-        #scrollToTopBtn:hover { background: var(--accent-hover); transform: scale(1.1); }
+        #scrollToTopBtn:hover { background: var(--brand-hover); transform: translateY(-5px); }
 
-        /* --- CONTACT & FOOTER (REQT 17 & 18) --- */
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        /* Live Core Stream Feed Terminal Log System */
+        .live-terminal-log-system {
+            margin-top: 40px;
+            background: #05070c;
+            border: 1px solid var(--border-ui);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #10b981;
+            height: 110px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* --- CONTACT & FOOTER BRANDING --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .contact-info p { margin-bottom: 16px; display: flex; align-items: center; gap: 14px; font-size: 15px; color: var(--text-main); }
+        .contact-info p i { color: var(--brand-accent); font-size: 18px; }
+        
+        .social-links { display: flex; gap: 12px; }
         .social-links a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--bg-secondary);
-            color: var(--text-dark);
-            border-radius: 50%;
-            margin-right: 10px;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-primary);
+            color: var(--text-main);
+            border: 1px solid var(--border-ui);
+            border-radius: 12px;
             text-decoration: none;
-            transition: var(--transition);
+            transition: var(--motion-smooth);
         }
-        .social-links a:hover { background: var(--accent-color); color: white; transform: translateY(-3px); }
+        .social-links a:hover { background: var(--brand-accent); color: white; border-color: transparent; transform: translateY(-4px); }
 
         footer {
             text-align: center;
-            padding: 30px 24px;
-            border-top: 1px solid var(--border-color);
-            margin-top: 40px;
-            color: var(--text-light);
+            padding: 40px 0;
+            border-top: 1px solid var(--border-ui);
+            margin-top: 60px;
+            color: var(--text-muted);
             font-size: 14px;
         }
 
-        /* Responsive Breakpoints */
+        /* --- ADAPTIVE RESPONSIVENESS OVERLAYS --- */
+        @media(max-width: 1200px) {
+            main { padding: 40px; }
+            .list-grid, .contact-grid, .workspace-productivity-hubs { grid-template-columns: 1fr; gap: 30px; }
+        }
         @media(max-width: 992px) {
-            aside { width: 70px; }
+            aside { width: 80px; padding: 10px 5px; }
             aside .sidebar-brand span, aside .nav-links span { display: none; }
-            aside .sidebar-brand { justify-content: center; }
-            aside .nav-links a { justify-content: center; }
-            main { margin-left: 70px; padding: 20px; }
-            .welcome-grid, .list-grid, .contact-grid, form { grid-template-columns: 1fr; }
+            aside .sidebar-brand { justify-content: center; padding: 20px 0; }
+            aside .nav-links a { justify-content: center; padding: 14px; }
+            main { margin-left: 80px; width: calc(100% - 80px); padding: 30px 24px; }
+            form { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 
+    <!-- SIDEBAR NAVIGATION MENU (REQT 2) -->
     <aside>
         <div class="sidebar-brand">
             <i class="fa-solid fa-graduation-cap"></i>
@@ -500,35 +701,39 @@
     </aside>
 
     <main>
+        <!-- UTILITY CONTROL ROW (REQT 10 & 11) -->
         <div class="utility-row">
             <button class="circle-control-btn" id="notificationToggleBtn" title="Toggle Notifications">
                 <i class="fa-solid fa-bell"></i>
-                <span class="notification-badge">2</span>
+                <span class="notification-badge" id="notifBadge">2</span>
             </button>
             <button class="circle-control-btn" id="themeSwitcherBtn" title="Switch Theme">
                 <i class="fa-solid fa-moon"></i>
             </button>
         </div>
 
+        <!-- NOTIFICATION DROPDOWN FRAME (REQT 11) -->
         <div class="notification-panel" id="notificationPanel">
-            <h4><i class="fa-solid fa-bullhorn" style="color: var(--accent-color)"></i> Live Center Updates</h4>
-            <ul class="notification-list">
+            <h4><i class="fa-solid fa-bullhorn" style="color: var(--brand-accent)"></i> Live Center Updates</h4>
+            <ul class="notification-list" id="notificationList">
                 <li>🚀 <strong>Global Pomodoro Network:</strong> Server synchronized event starting in 25 minutes.</li>
                 <li>🔒 <strong>Security Notice:</strong> Your JWT access token session refresh was successful.</li>
             </ul>
         </div>
         
+        <!-- HERO WELCOME BANNER (REQT 3) -->
         <header id="home">
             <div class="typing-container">
                 <h1>EduFocus Pro Platform</h1>
             </div>
-            <p>"Focus Together, Achieve Together" — Seamless workspace environments customized for optimized virtual productivity.</p>
+            <p>"Focus Together, Achieve Together" — Seamless workspace environments customized for optimized virtual productivity matrices and remote team collaboration layouts.</p>
             <div class="meta-info">
-                <span><i class="fa-solid fa-user"></i> Student: <strong id="headerName">[Your Name Here]</strong></span>
-                <span><i class="fa-solid fa-clock"></i> Local Time: <strong id="liveClock" class="live-clock-widget">00:00:00 AM</strong></span>
+                <span><i class="fa-solid fa-user" style="color: var(--brand-accent)"></i> Operator: <strong id="headerName">[Your Name Here]</strong></span>
+                <span><i class="fa-solid fa-clock" style="color: #22c55e"></i> System Sync: <strong id="liveClock" class="live-clock-widget">00:00:00 AM</strong></span>
             </div>
         </header>
 
+        <!-- IMAGE BANNER CAROUSEL (REQT 8) -->
         <div class="slider-container">
             <button class="slider-arrow arrow-left" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></button>
             <div class="slide">
@@ -546,13 +751,14 @@
             <button class="slider-arrow arrow-right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
 
+        <!-- ANALYTICS STATISTICS COUNTERS (REQT 4 & 5) -->
         <section id="dashboard">
-            <h2><i class="fa-solid fa-chart-line"></i> Dynamic Analytics Matrix</h2>
+            <h2><i class="fa-solid fa-chart-line" style="color: var(--brand-accent)"></i> Dynamic Analytics Matrix</h2>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="icon-wrapper"><i class="fa-solid fa-users"></i></div>
                     <h3>Total Registrations</h3>
-                    <p class="counter-ticker" data-target="12450">0</p>
+                    <p id="totalRegs">12,450</p>
                 </div>
                 <div class="stat-card">
                     <div class="icon-wrapper"><i class="fa-solid fa-circle-dot" style="color: #22c55e;"></i></div>
@@ -562,20 +768,50 @@
                 <div class="stat-card">
                     <div class="icon-wrapper"><i class="fa-solid fa-bolt"></i></div>
                     <h3>Sessions Completed</h3>
-                    <p class="counter-ticker" data-target="8912">0</p>
+                    <p id="sessionsDone">8,912</p>
                 </div>
                 <div class="stat-card">
                     <div class="icon-wrapper"><i class="fa-solid fa-award"></i></div>
                     <h3>Badges Issued</h3>
-                    <p class="counter-ticker" data-target="4510">0</p>
+                    <p id="badgesIssued">4,510</p>
                 </div>
             </div>
         </section>
 
-        <section id="features-services">
-            <div class="list-grid">
-                <div>
-                    <h2><i class="fa-solid fa-star"></i> Core Platform Features</h2>
+        <!-- REAL APPLICATION PRODUCTIVITY MODULES EXPANSE -->
+        <div class="workspace-productivity-hubs">
+            <div class="chat-module-box">
+                <div class="chat-header-bar">
+                    <span><i class="fa-solid fa-comments" style="color: var(--brand-accent)"></i> Global Co-Working Space Channel</span>
+                    <span><span class="chat-pulse-node"></span> Live Network</span>
+                </div>
+                <div class="chat-scroller-area" id="chatArea">
+                    <div class="chat-bubble-row peer"><strong>Sarah_99:</strong> Hey everyone! Joining from library node 4, ready for a 45-minute sprint.</div>
+                    <div class="chat-bubble-row peer"><strong>DevonMech:</strong> Anyone setting up a code refactoring workspace pool?</div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" id="chatTextInput" placeholder="Broadcast message into workspace stream...">
+                    <button id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+
+            <div class="kanban-tasks-panel">
+                <h3 style="font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-list-check" style="color: #f59e0b"></i> Active Sprint Milestones</h3>
+                <div style="display:flex; gap: 8px; margin-top: 12px;">
+                    <input type="text" id="taskInput" placeholder="Add milestone..." style="padding: 10px 14px; font-size: 13px;">
+                    <button id="addTaskBtn" style="padding: 0 16px; font-size: 13px; background: var(--brand-accent); color: white; border-radius: var(--radius-smooth);">+</button>
+                </div>
+                <div class="task-list-scroller" id="taskListContainer">
+                    <div class="task-item-card"><span>Review distributed database indexing models</span><button class="task-trash-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button></div>
+                </div>
+            </div>
+        </div>
+
+        <!--/div FEATURES & SERVICES CONTAINER (REQT 6 & 7) -->
+        <div class="list-grid" id="features-services">
+            <section>
+                <h2><i class="fa-solid fa-star" style="color: #f59e0b"></i> Core Platform Features</h2>
+                <div class="panel-container">
                     <div class="interactive-panel-item">
                         <strong>Persistent Audio Hubs:</strong> Dynamic 24/7 crystal-clear media pipeline structures.
                     </div>
@@ -586,8 +822,11 @@
                         <strong>AI Synthesis Engine:</strong> Automated documentation compiling metrics instantly.
                     </div>
                 </div>
-                <div>
-                    <h2><i class="fa-solid fa-handshake"></i> Premium Services Offered</h2>
+            </section>
+
+            <section>
+                <h2><i class="fa-solid fa-handshake" style="color: #10b981"></i> Premium Services Offered</h2>
+                <div class="panel-container">
                     <div class="interactive-panel-item">
                         <strong>Verified On-Demand Tutors:</strong> Direct scheduling access across subject disciplines.
                     </div>
@@ -598,38 +837,39 @@
                         <strong>Decentralized Cabinets:</strong> Secure data vaults cataloging training files.
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
+        <!-- DATA MATRIX REPORT (REQT 1) -->
         <section id="reports">
-            <h2><i class="fa-solid fa-layer-group"></i> Architecture Engine Grid</h2>
+            <h2><i class="fa-solid fa-layer-group" style="color: #a855f7"></i> Architecture Engine Grid</h2>
+            
+            <div class="table-filter-bar">
+                <div class="filter-chip active" onclick="applyGridFilter('all', this)">All Layers</div>
+                <div class="filter-chip" onclick="applyGridFilter('Active', this)">Active</div>
+                <div class="filter-chip" onclick="applyGridFilter('Maintenance', this)">Maintenance</div>
+            </div>
+
             <div class="table-responsive">
-                <table>
+                <table id="reportsTable">
                     <thead>
                         <tr>
                             <th>Module Layer</th>
-                            <th>Subsystem Name</th>
-                            <th>Functional Mechanics</th>
+                            <th>Subsystem / Operator</th>
+                            <th>Operational Status</th>
+                            <th>Functional Mechanics / Target Scope</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><span class="badge">MOD-01</span></td>
-                            <td><strong>Identity Verification</strong></td>
-                            <td>Processes standard JWT architecture matrices and access keys.</td>
-                        </tr>
-                        <tr>
-                            <td><span class="badge">MOD-02</span></td>
-                            <td><strong>WebRTC Pipeline</strong></td>
-                            <td>Generates cross-browser peer interaction media sessions.</td>
-                        </tr>
+                        <!-- Core architectural records managed dynamically by script pipeline -->
                     </tbody>
                 </table>
             </div>
         </section>
 
+        <!-- VERIFIED REGISTRATION FORM WINDOW (REQT 12 & 13) -->
         <section id="register">
-            <h2><i class="fa-solid fa-clipboard-list"></i> Workspace Registration Form</h2>
+            <h2><i class="fa-solid fa-clipboard-list" style="color: var(--brand-accent)"></i> Workspace Registration Form</h2>
             <form id="registrationForm" novalidate>
                 <div class="form-group">
                     <label for="name">Full Name</label>
@@ -654,9 +894,9 @@
                 <div class="form-group">
                     <label>Gender Allocation</label>
                     <div class="radio-container">
-                        <label class="radio-option"><input type="radio" name="gender" value="male" checked> Male</label>
-                        <label class="radio-option"><input type="radio" name="gender" value="female"> Female</label>
-                        <label class="radio-option"><input type="radio" name="gender" value="other"> Other</label>
+                        <label class="radio-option"><input type="radio" name="gender" value="Male" checked> Male</label>
+                        <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
+                        <label class="radio-option"><input type="radio" name="gender" value="Other"> Other</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -676,8 +916,9 @@
             </form>
         </section>
 
+        <!-- CONTACT SYSTEM SECTION (REQT 17) -->
         <section id="contact">
-            <h2><i class="fa-solid fa-paper-plane"></i> System Administration Control</h2>
+            <h2><i class="fa-solid fa-paper-plane" style="color: #6366f1"></i> System Administration Control</h2>
             <div class="contact-grid">
                 <div class="contact-info">
                     <p><i class="fa-solid fa-envelope"></i> admin@edufocus.com</p>
@@ -685,7 +926,7 @@
                     <p><i class="fa-solid fa-location-dot"></i> Quantum Building, Level 4 Tech Corridor</p>
                 </div>
                 <div>
-                    <p style="font-weight: 600; margin-bottom: 12px; color: var(--text-dark);">Connect and Sync Profiles</p>
+                    <p style="font-weight: 700; margin-bottom: 16px; font-size: 14px; text-transform: uppercase; color: var(--text-muted);">Connect and Sync Profiles</p>
                     <div class="social-links">
                         <a href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
                         <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i></a>
@@ -694,19 +935,43 @@
             </div>
         </section>
 
+        <!-- REAL WEB CORE SYSTEM OPERATIONS LOG TERMINAL -->
+        <div class="live-terminal-log-system" id="terminalLogArea">
+            <div>[SYSTEM LOG INITIALIZING...] Core engine parameters matching telemetry expectations.</div>
+            <div>[SECURITY ENGINE] JWT authentication key verified against edge routers.</div>
+        </div>
+
+        <!-- FOOTER ELEMENT BRANDS (REQT 18) -->
         <footer>
             <p>&copy; 2026 EduFocus Space Platform. Engineered by <strong id="footerName">[Your Name Here]</strong> for Placement Portfolio Evaluation.</p>
-            <div class="social-links" style="margin-top: 15px; justify-content: center; display: flex;">
+            <div class="social-links" style="margin-top: 20px; justify-content: center;">
                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </footer>
     </main>
 
+    <!-- FLOATING RETRACTABLE BACK TO TOP TRIGGER (REQT 16) -->
     <button id="scrollToTopBtn" title="Back to Top"><i class="fa-solid fa-arrow-up"></i></button>
 
+    <!-- --- CORE INTERACTION LOGIC CONTROL SCRIPT --- -->
     <script>
-        /* 1. DYNAMIC HEADER SYNC & LOCAL STORAGE ENGINE */
+        /* 1. INITIALIZE REAL APPLICATION PERSISTENT DATA LAYER */
+        let state = {
+            totalRegs: parseInt(localStorage.getItem('edu_totalRegs')) || 12450,
+            activeUsers: 3842,
+            sessionsDone: parseInt(localStorage.getItem('edu_sessionsDone')) || 8912,
+            badgesIssued: parseInt(localStorage.getItem('edu_badgesIssued')) || 4510,
+            registeredUsers: JSON.parse(localStorage.getItem('edu_userRecords')) || [],
+            currentFilter: 'all'
+        };
+
+        const staticBaseLayers = [
+            { id: "MOD-01", name: "Identity Verification", status: "Active", desc: "Processes standard JWT architecture matrices and access keys." },
+            { id: "MOD-02", name: "WebRTC Pipeline", status: "Active", desc: "Generates cross-browser peer interaction media sessions." },
+            { id: "MOD-03", name: "Analytical Pipeline Analyzer", status: "Maintenance", desc: "Compiles database execution indices across runtime arrays." }
+        ];
+
         const headerName = document.getElementById('headerName');
         const footerName = document.getElementById('footerName');
 
@@ -716,10 +981,58 @@
                 headerName.innerText = currentCachedUser;
                 footerName.innerText = currentCachedUser;
             }
+            
+            // Push calculated values straight into dashboard elements
+            document.getElementById('totalRegs').innerText = state.totalRegs.toLocaleString();
+            document.getElementById('activeUsers').innerText = state.activeUsers.toLocaleString();
+            document.getElementById('sessionsDone').innerText = state.sessionsDone.toLocaleString();
+            document.getElementById('badgesIssued').innerText = state.badgesIssued.toLocaleString();
+            
+            renderTableRecords();
         }
-        synchronizeSessionState();
 
-        /* 2. REAL-TIME DIGITAL CLOCK MODULE (REQT 9) */
+        function renderTableRecords() {
+            const tableBody = document.querySelector('#reportsTable tbody');
+            tableBody.innerHTML = '';
+
+            // Filter context definition checks
+            let compiledSet = [...staticBaseLayers];
+            state.registeredUsers.forEach((user, index) => {
+                compiledSet.push({
+                    id: `USER-${100 + index}`,
+                    name: user.name,
+                    status: "Active",
+                    desc: `Registered workspace hub operator via ${user.email}. Located out of: ${user.address}.`
+                });
+            });
+
+            compiledSet.forEach(item => {
+                if(state.currentFilter !== 'all' && item.status !== state.currentFilter) return;
+
+                const tr = document.createElement('tr');
+                tr.style.animation = "premiumFadeUp 0.3s ease forwards";
+                
+                let statusBadgeStyle = item.status === 'Active' ? 'background:rgba(16,185,129,0.1); color:#10b981;' : 'background:rgba(245,158,11,0.1); color:#f59e0b;';
+
+                tr.innerHTML = `
+                    <td><span class="badge">${item.id}</span></td>
+                    <td><strong>${item.name}</strong></td>
+                    <td><span class="badge" style="${statusBadgeStyle}">${item.status}</span></td>
+                    <td>${item.desc}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function applyGridFilter(filterValue, chipBtn) {
+            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+            chipBtn.classList.add('active');
+            state.currentFilter = filterValue;
+            renderTableRecords();
+            appendTerminalMessage(`[UI EVENT] Table content filtered layout switching context to: ${filterValue}`);
+        }
+
+        /* 2. LIVE MECHANICAL SYSTEM CLOCK ENGINE (REQT 9) */
         function triggerClockTick() {
             const clockFrame = document.getElementById('liveClock');
             const systemTime = new Date();
@@ -728,7 +1041,7 @@
         setInterval(triggerClockTick, 1000);
         triggerClockTick();
 
-        /* 3. LIGHT MODE / DARK MODE THEME SWITCHER (REQT 10) */
+        /* 3. TRANSITION INTEGRATED THEME MANAGEMENT SYSTEM (REQT 10) */
         const themeSwitcherBtn = document.getElementById('themeSwitcherBtn');
         const rootElement = document.documentElement;
 
@@ -736,18 +1049,30 @@
             const targetedTheme = rootElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             rootElement.setAttribute('data-theme', targetedTheme);
             themeSwitcherBtn.innerHTML = targetedTheme === 'dark' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+            appendTerminalMessage(`[THEME PROFILE] Core visual engine flipped into: ${targetedTheme.toUpperCase()} mode.`);
         });
 
-        /* 4. SHOW / HIDE NOTIFICATION FEEDS ACTIVATION (REQT 11) */
+        /* 4. NOTIFICATION REVEAL ACTION HANDLERS (REQT 11) */
         const notificationToggleBtn = document.getElementById('notificationToggleBtn');
         const notificationPanel = document.getElementById('notificationPanel');
+        const notifBadge = document.getElementById('notifBadge');
 
         notificationToggleBtn.addEventListener('click', () => {
-            const isVisible = notificationPanel.style.display === 'block';
+            const isVisible = window.getComputedStyle(notificationPanel).display === 'block';
             notificationPanel.style.display = isVisible ? 'none' : 'block';
+            notifBadge.style.display = "none"; // Clear badge alert when viewed
         });
 
-        /* 5. IMAGE SLIDER BANNER CAROUSEL DRIVER (REQT 8) */
+        function pushLiveSystemNotification(text) {
+            const list = document.getElementById('notificationList');
+            const li = document.createElement('li');
+            li.innerHTML = `⚡ <strong>System Notification:</strong> ${text}`;
+            list.insertBefore(li, list.firstChild);
+            notifBadge.style.display = "block";
+            notifBadge.innerText = parseInt(notifBadge.innerText || 0) + 1;
+        }
+
+        /* 5. INTERACTIVE CAROUSEL SLIDER CONTROLLER (REQT 8) */
         const structuralSlides = document.querySelectorAll('.slide');
         const prevBtn = document.getElementById('slidePrev');
         const nextBtn = document.getElementById('slideNext');
@@ -770,24 +1095,55 @@
         nextBtn.addEventListener('click', () => { clearInterval(automaticRotationLoop); executeNextSlide(); automaticRotationLoop = setInterval(executeNextSlide, 5000); });
         prevBtn.addEventListener('click', () => { clearInterval(automaticRotationLoop); executePrevSlide(); automaticRotationLoop = setInterval(executeNextSlide, 5000); });
 
-        /* 6. DYNAMIC COUNTER TICKER ENGINE (REQT 5) */
-        const statisticalCounters = document.querySelectorAll('.counter-ticker');
-        statisticalCounters.forEach(counter => {
-            const ceilingValue = parseInt(counter.getAttribute('data-target'));
-            const incrementSpeed = ceilingValue / 100;
-            let counterProgressValue = 0;
-            
-            const handleCountTick = () => {
-                if(counterProgressValue < ceilingValue) {
-                    counterProgressValue = Math.ceil(counterProgressValue + incrementSpeed);
-                    counter.innerText = Math.min(counterProgressValue, ceilingValue).toLocaleString();
-                    setTimeout(handleCountTick, 15);
-                }
-            };
-            handleCountTick();
+        /* LIVE CHAT INTERACTION CORE SYSTEM HANDLERS */
+        const sendChatBtn = document.getElementById('sendChatBtn');
+        const chatTextInput = document.getElementById('chatTextInput');
+        const chatArea = document.getElementById('chatArea');
+
+        function sendOperatorChatMessage() {
+            const msgText = chatTextInput.value.trim();
+            if(!msgText) return;
+
+            const operatorName = localStorage.getItem('assignment2_user') || 'Operator';
+            const chatBubble = document.createElement('div');
+            chatBubble.className = "chat-bubble-row operator";
+            chatBubble.innerHTML = `<strong>${operatorName}:</strong> ${msgText}`;
+            chatArea.appendChild(chatBubble);
+            chatTextInput.value = '';
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            appendTerminalMessage(`[COMMUNICATION PIPELINE] Broadcast outbound text sequence via operator array allocation.`);
+        }
+        sendChatBtn.addEventListener('click', sendOperatorChatMessage);
+        chatTextInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendOperatorChatMessage(); });
+
+        /* LIVE KANBAN BOARD SYSTEM HANDLING EXECUTION */
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const taskInput = document.getElementById('taskInput');
+        const taskListContainer = document.getElementById('taskListContainer');
+
+        addTaskBtn.addEventListener('click', () => {
+            const taskVal = taskInput.value.trim();
+            if(!taskVal) return;
+            const card = document.createElement('div');
+            card.className = "task-item-card";
+            card.innerHTML = `<span>${taskVal}</span><button class="task-trash-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>`;
+            taskListContainer.appendChild(card);
+            taskInput.value = '';
+            appendTerminalMessage(`[PRODUCTIVITY MATRIX] Appended local task sprint milestone entry.`);
         });
 
-        /* 7. REGISTRATION FIELD VALIDATION ARCHITECTURE (REQT 13) */
+        /* LOW LEVEL INFRASTRUCTURE SIMULATED LOG MODULE */
+        const terminalLogArea = document.getElementById('terminalLogArea');
+        function appendTerminalMessage(msg) {
+            const logDiv = document.createElement('div');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerText = `[${timestamp}] ${msg}`;
+            terminalLogArea.appendChild(logDiv);
+            terminalLogArea.scrollTop = terminalLogArea.scrollHeight;
+        }
+
+        /* 6. ASYNCHRONOUS FORM INPUT VALIDATION ROUTINE WITH DYNAMIC PROPAGATION (REQT 12 & 13) */
         const registrationForm = document.getElementById('registrationForm');
         
         function validateInputField(inputElement, checkingRegex, errorElementId) {
@@ -824,15 +1180,40 @@
 
             if(nameValid && emailValid && phoneValid && passwordValid && dobValid && addressValid) {
                 const targetProfileName = document.getElementById('name').value.trim();
+                const targetProfileEmail = document.getElementById('email').value.trim();
+                const targetProfileAddress = document.getElementById('address').value.trim();
+                const targetGender = document.querySelector('input[name="gender"]:checked').value;
+
+                // Mutate Application State Matrix
+                state.totalRegs += 1;
+                state.sessionsDone += 4; // Complete mock sessions automatically
+                state.badgesIssued += 1; // Award signup badge
+                
+                state.registeredUsers.push({
+                    name: targetProfileName,
+                    email: targetProfileEmail,
+                    address: targetProfileAddress,
+                    gender: targetGender
+                });
+
+                // Commit Application States To Local Browser Storage Cache
                 localStorage.setItem('assignment2_user', targetProfileName);
-                headerName.innerText = targetProfileName;
-                footerName.innerText = targetProfileName;
-                alert(`🎉 Form Verified Successfully! Registered user profiles synced for ${targetProfileName}.`);
+                localStorage.setItem('edu_totalRegs', state.totalRegs);
+                localStorage.setItem('edu_sessionsDone', state.sessionsDone);
+                localStorage.setItem('edu_badgesIssued', state.badgesIssued);
+                localStorage.setItem('edu_userRecords', JSON.stringify(state.registeredUsers));
+
+                // Sync Visual Elements
+                synchronizeSessionState();
+                pushLiveSystemNotification(`New account registration approved for ${targetProfileName}. Custom Workspace allocation complete.`);
+                appendTerminalMessage(`[CORE REGS ENGINE] Database write operation success for account row block: ${targetProfileName}`);
+                
+                alert(`🎉 Portfolio State Updated! ${targetProfileName} has been recorded into the local database system successfully.`);
                 registrationForm.reset();
             }
         });
 
-        /* 8. FLOATING FLOOD BACK TO TOP TRIGGER MODULE (REQT 16) */
+        /* 8. SMOOTH VIEWPORT RETRACTION ARROW HANDLER (REQT 16) */
         const scrollToTopBtn = document.getElementById('scrollToTopBtn');
         window.addEventListener('scroll', () => {
             if(window.scrollY > 400) { scrollToTopBtn.style.display = 'flex'; }
@@ -842,27 +1223,53 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
 
-        /* 9. ENVIRONMENT LOGOUT MANAGEMENT DISMISSAL SCREEN */
+        /* 9. SECURE PROFILE PROFILE DESTRUCTOR BUTTON CLEAR HANDLER */
         document.getElementById('logoutBtn').addEventListener('click', (e) => {
             e.preventDefault();
-            if(confirm("Are you confident you want to logout of your session configuration values?")) {
-                localStorage.removeItem('assignment2_user');
-                alert("Credentials purged successfully. Resetting interface dashboard instances...");
+            if(confirm("Purge dynamic database variables and clear application state caches completely?")) {
+                localStorage.clear();
                 window.location.reload();
             }
         });
 
-        /* 10. REAL-TIME METRIC OSCILLATIONS TRIGGER FLOODS */
+        /* 10. REAL TIME LIVE USER OSCILLATION FLUIDITY ROUTINES WITH SIMULATED SYSTEM CHAT DISPATCH */
+        const mockPeerPhrases = [
+            "Just finished that physics quiz layout! Retaining focus tiers feels amazing.",
+            "Database engine syncing loops completed ahead of target milestone schedules.",
+            "Does anyone want to jump into a 50-10 Pomodoro audio matrix channel?",
+            "System telemetry looks highly optimized this afternoon."
+        ];
+        const mockPeerNames = ["TechGuru_4", "Elena_Codez", "MarcusV", "AlphaDev_91"];
+
         setInterval(() => {
             const liveTrackerTarget = document.getElementById('activeUsers');
             if(liveTrackerTarget) {
-                const stepDeviation = Math.floor(Math.random() * 9) - 4; 
-                let baseValue = parseInt(liveTrackerTarget.innerText.replace(/,/g, ''));
-                liveTrackerTarget.innerText = (baseValue + stepDeviation).toLocaleString();
+                const stepDeviation = Math.floor(Math.random() * 7) - 3; 
+                state.activeUsers = Math.max(1000, state.activeUsers + stepDeviation);
+                liveTrackerTarget.innerText = state.activeUsers.toLocaleString();
+                
+                // Randomly post active network notices to prove real action events
+                let eventWeight = Math.random();
+                if(eventWeight > 0.75) {
+                    pushLiveSystemNotification(`A cohort has synchronized on Pomodoro Node Channel-${Math.floor(Math.random()*15 + 1)}.`);
+                    appendTerminalMessage(`[TELETRAM NETWORK] WebRTC session cluster successfully provisioned over edge node routing arrays.`);
+                } else if (eventWeight < 0.25) {
+                    // Dispatch synthetic live peer chatter message directly into viewport window
+                    const ranName = mockPeerNames[Math.floor(Math.random() * mockPeerNames.length)];
+                    const ranMsg = mockPeerPhrases[Math.floor(Math.random() * mockPeerPhrases.length)];
+                    const bubble = document.createElement('div');
+                    bubble.className = "chat-bubble-row peer";
+                    bubble.innerHTML = `<strong>${ranName}:</strong> ${ranMsg}`;
+                    chatArea.appendChild(bubble);
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                }
             }
-        }, 3500);
+        }, 4000);
 
-        // Sidebar link highlighting logic
+        // Run initial synchronization process
+        synchronizeSessionState();
+
+        // Sticky dynamic visual line link tracker mapping active state metrics
         const sidebarLinks = document.querySelectorAll('.nav-links a');
         sidebarLinks.forEach(link => {
             link.addEventListener('click', function() {
